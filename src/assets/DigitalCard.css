@@ -1,0 +1,430 @@
+/*  Fonts  */
+
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@300;400;500&display=swap');
+
+
+/* Design Tokens */
+
+/*
+  All colours, spacing, and effects defined here.
+*/
+
+:root {
+  --bg:            #080c14;
+  --card-bg:       rgba(12, 18, 32, 0.75);
+  --card-border:   rgba(99, 179, 237, 0.12);
+  --card-shadow:   0 32px 80px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(99,179,237,0.08);
+
+  --accent-start:  #38bdf8;   /* sky blue  */
+  --accent-mid:    #818cf8;   /* violet    */
+  --accent-end:    #34d399;   /* teal      */
+
+  --text-primary:  #f0f4ff;
+  --text-secondary:#94a3b8;
+  --text-muted:    #475569;
+
+  --badge-bg:      rgba(56, 189, 248, 0.07);
+  --badge-border:  rgba(56, 189, 248, 0.18);
+
+  --link-hover-bg: rgba(56, 189, 248, 0.06);
+
+  --font-display:  'DM Serif Display', Georgia, serif;
+  --font-body:     'DM Sans', system-ui, sans-serif;
+
+  --radius:        20px;
+  --radius-sm:     10px;
+}
+
+
+/* Reset  */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+
+/* Page */
+
+.page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 32px 16px;
+  background: var(--bg);
+  font-family: var(--font-body);
+  position: relative;
+  overflow: hidden;
+}
+
+
+/* Background mesh circles  */
+/*
+  Three large blurred gradient circles sit behind the card
+  to create a soft, atmospheric glow effect.
+*/
+
+.bg-mesh {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.mesh-circle {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(90px);
+  opacity: 0.22;
+}
+
+.mesh-circle--1 {
+  width: 520px;
+  height: 520px;
+  background: radial-gradient(circle, #38bdf8, transparent 70%);
+  top: -120px;
+  left: -100px;
+}
+
+.mesh-circle--2 {
+  width: 480px;
+  height: 480px;
+  background: radial-gradient(circle, #818cf8, transparent 70%);
+  bottom: -80px;
+  right: -80px;
+}
+
+.mesh-circle--3 {
+  width: 360px;
+  height: 360px;
+  background: radial-gradient(circle, #34d399, transparent 70%);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+
+/* Card */
+
+.card {
+  width: 100%;
+  max-width: 480px;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius);
+  box-shadow: var(--card-shadow);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  overflow: hidden;
+  position: relative;
+
+  /* Entrance animation. Starts invisible and slightly low */
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 0.55s ease, transform 0.55s ease;
+}
+
+.card--visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+
+/* Card accent bar */
+/* Thin gradient stripe across the top of the card */
+
+.card-accent {
+  height: 3px;
+  background: linear-gradient(
+    90deg,
+    var(--accent-start),
+    var(--accent-mid),
+    var(--accent-end)
+  );
+}
+
+
+/* Card inner padding */
+
+.card-header,
+.tagline,
+.divider,
+.bio,
+.badges,
+.links,
+.card-footer {
+  padding-left: 28px;
+  padding-right: 28px;
+}
+
+
+/* Header */
+
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding-top: 28px;
+  padding-bottom: 18px;
+  flex-wrap: wrap;
+}
+
+
+/* Avatar */
+
+.avatar {
+  position: relative;
+  width: 58px;
+  height: 58px;
+  flex-shrink: 0;
+}
+
+.avatar-initials {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-size: 20px;
+  color: var(--text-primary);
+  background: linear-gradient(135deg, rgba(56,189,248,0.15), rgba(129,140,248,0.15));
+  border-radius: 50%;
+  border: 1px solid rgba(56,189,248,0.2);
+  z-index: 1;
+}
+
+/* Spinning gradient ring behind the avatar */
+.avatar-ring {
+  position: absolute;
+  inset: -3px;
+  border-radius: 50%;
+  background: conic-gradient(
+    var(--accent-start),
+    var(--accent-mid),
+    var(--accent-end),
+    var(--accent-start)
+  );
+  animation: spin 6s linear infinite;
+  z-index: 0;
+}
+
+/* Mask out the centre so only the ring shows */
+.avatar-ring::after {
+  content: '';
+  position: absolute;
+  inset: 3px;
+  border-radius: 50%;
+  background: var(--bg);
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+
+/* Name block */
+
+.name-block {
+  flex: 1;
+  min-width: 0;
+}
+
+.name {
+  font-family: var(--font-display);
+  font-size: 24px;
+  font-weight: 400;
+  color: var(--text-primary);
+  letter-spacing: 0.01em;
+  line-height: 1.15;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.handle {
+  font-size: 13px;
+  color: var(--accent-start);
+  margin-top: 3px;
+  letter-spacing: 0.04em;
+}
+
+
+/* Status pill */
+
+.status-pill {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 5px 12px;
+  border-radius: 999px;
+  background: rgba(52, 211, 153, 0.07);
+  border: 1px solid rgba(52, 211, 153, 0.2);
+  font-size: 11px;
+  color: #34d399;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+  min-height: 26px;         /* stable height while text changes */
+  min-width: 180px;
+}
+
+.status-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #34d399;
+  flex-shrink: 0;
+  animation: pulse 2s ease infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%       { opacity: 0.4; transform: scale(0.75); }
+}
+
+.status-text {
+  flex: 1;
+}
+
+
+/* Tagline */
+
+.tagline {
+  font-size: 12.5px;
+  color: var(--text-secondary);
+  letter-spacing: 0.06em;
+  padding-bottom: 20px;
+  line-height: 1.5;
+}
+
+
+/* Divider */
+
+.divider {
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(99,179,237,0.15) 30%,
+    rgba(99,179,237,0.15) 70%,
+    transparent
+  );
+  margin: 0;
+  padding: 0;
+}
+
+
+/* Bio */
+
+.bio {
+  font-size: 13.5px;
+  color: var(--text-secondary);
+  line-height: 1.75;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+
+/* Stack badges  */
+
+.badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding-bottom: 22px;
+}
+
+.badge {
+  font-size: 11.5px;
+  padding: 4px 12px;
+  border-radius: 999px;
+  background: var(--badge-bg);
+  border: 1px solid var(--badge-border);
+  color: var(--accent-start);
+  letter-spacing: 0.04em;
+  transition: background 0.15s, border-color 0.15s;
+  cursor: default;
+  user-select: none;
+}
+
+.badge:hover {
+  background: rgba(56, 189, 248, 0.13);
+  border-color: rgba(56, 189, 248, 0.35);
+}
+
+
+/* Link buttons */
+
+.links {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding-top: 18px;
+  padding-bottom: 6px;
+}
+
+.link-button {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: var(--radius-sm);
+  text-decoration: none;
+  color: var(--text-secondary);
+  transition: background 0.15s, color 0.15s;
+  cursor: pointer;
+}
+
+.link-button:hover {
+  background: var(--link-hover-bg);
+  color: var(--text-primary);
+}
+
+.link-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: rgba(56, 189, 248, 0.08);
+  border: 1px solid rgba(56, 189, 248, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--accent-start);
+  flex-shrink: 0;
+  font-family: var(--font-body);
+}
+
+.link-label {
+  flex: 1;
+  font-size: 13.5px;
+  letter-spacing: 0.02em;
+}
+
+.link-arrow {
+  font-size: 14px;
+  color: var(--text-muted);
+  transition: color 0.15s, transform 0.15s;
+}
+
+.link-button:hover .link-arrow {
+  color: var(--accent-start);
+  transform: translate(2px, -2px);
+}
+
+
+/* Footer */
+
+.card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 16px;
+  padding-bottom: 20px;
+  font-size: 11px;
+  color: var(--text-muted);
+  letter-spacing: 0.05em;
+}
