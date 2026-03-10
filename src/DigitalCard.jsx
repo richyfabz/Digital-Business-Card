@@ -8,9 +8,9 @@ const profile = {
   name: "Fabunmi Richard",
   handle: "@richyfabz",
   tagline: "Data Engineer · AI Engineer · Smart Contracts · Full-Stack",
-  location: "Lagos, NG 🌍",
+  location: "Lagos, NG ",
   bio: "Building at the intersection of data, AI, and decentralised systems. Smart contract dev in Solidity, data pipelines, AI engineering, and full-stack web. Currently shipping a Web3 DevRel Campaigns Platform.",
-  stack: ["Solidity", "Rust", "Python", "Next.js", "Supabase", "wagmi", "SQL", "AI/ML"],
+  stack: ["Solidity", "Python", "Next.js", "Supabase", "wagmi", "SQL", "React"],
   links: [
     { label: "Twitter / X",  href: "https://x.com/damilola356075",                          icon: "𝕏" },
     { label: "LinkedIn",     href: "https://www.linkedin.com/in/fabunmi-richard-a686ab23b/", icon: "in" },
